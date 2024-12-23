@@ -13,3 +13,4 @@ https://github.com/TarnaWijaya/Links-Short-XTarz/blob/main/news/assets/IMG-20241
 https://github.com/TarnaWijaya/Links-Short-XTarz/blob/main/news/assets/IMG-20241223-WA0026.jpg
 
 lengkap:
+https://github.com/TarnaWijaya/Links-Short-XTarz/blob/main/news/assets/Documents.zip
