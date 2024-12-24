@@ -1,133 +1,148 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>News Feed</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+<html>
+ <head>
+  <title>
+   News Feed
+  </title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-    body {
-      font-family: 'Roboto', sans-serif;
-      background-color: #121212;
-      color: #ffffff;
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      padding: 20px;
-    }
-    .news-item {
-      background-color: #1e1e1e;
-      border-radius: 15px;
-      margin-bottom: 20px;
-      padding: 15px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      transition: transform 0.2s, box-shadow 0.2s;
-      cursor: pointer;
-      overflow: hidden;
-      position: relative;
-    }
-    .news-item:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-    }
-    .news-item img {
-      width: 100%;
-      border-radius: 15px;
-      transition: transform 0.2s;
-    }
-    .news-item:hover img {
-      transform: scale(1.1);
-    }
-    .news-item .source {
-      display: flex;
-      align-items: center;
-      margin-top: 10px;
-    }
-    .news-item .source img {
-      width: 20px;
-      height: 20px;
-      margin-right: 10px;
-    }
-    .news-item .title {
-      font-size: 18px;
-      margin: 10px 0;
-      font-weight: bold;
-    }
-    .news-item .actions {
-      display: flex;
-      align-items: center;
-      font-size: 14px;
-      color: #a1a1a1;
-    }
-    .news-item .actions i {
-      margin-right: 5px;
-    }
-    .news-item .actions .likes {
-      margin-right: 15px;
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-    }
-    .news-item .actions .likes span {
-      font-size: 14px;
-    }
-    .footer {
-      display: flex;
-      justify-content: center;
-      background-color: #1e1e1e;
-      padding: 10px 0;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
-    }
-    .footer i {
-      color: #ffffff;
-      font-size: 24px;
-      transition: color 0.2s;
-    }
-    .footer i:hover {
-      color: #1e90ff;
-    }
+   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            padding: 20px;
+        }
+        .news-item {
+            background-color: #1e1e1e;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+        }
+        .news-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        }
+        .news-item img {
+            width: 100%;
+            border-radius: 15px;
+            transition: transform 0.2s;
+        }
+        .news-item:hover img {
+            transform: scale(1.1);
+        }
+        .news-item .source {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .news-item .source img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+        .news-item .title {
+            font-size: 18px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .news-item .actions {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #a1a1a1;
+        }
+        .news-item .actions i {
+            margin-right: 5px;
+        }
+        .news-item .actions .likes {
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        .news-item .actions .likes i {
+            margin-right: 5px;
+        }
+        .news-item .actions .likes span {
+            font-size: 14px;
+        }
+        .news-item .ad {
+            color: #a1a1a1;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        .footer {
+            display: flex;
+            justify-content: center;
+            background-color: #1e1e1e;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .footer i {
+            color: #ffffff;
+            font-size: 24px;
+            transition: color 0.2s;
+        }
+        .footer i:hover {
+            color: #1e90ff;
+        }
   </style>
   <script>
-    function likePost(event, element) {
-      event.stopPropagation();
-      let likesCount = parseInt(element.querySelector('span').innerText);
-      likesCount++;
-      element.querySelector('span').innerText = likesCount;
-      localStorage.setItem('likes', likesCount);
-    }
+   function likePost(element) {
+            let likesCount = parseInt(element.querySelector('span').innerText);
+            likesCount++;
+            element.querySelector('span').innerText = likesCount;
+            localStorage.setItem('likes', likesCount);
+        }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const likes = localStorage.getItem('likes');
-      if (likes) {
-        document.querySelector('.likes span').innerText = likes;
-      }
-    });
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const likes = localStorage.getItem('likes');
+            if (likes) {
+                document.querySelector('.likes span').innerText = likes;
+            }
+        });
   </script>
-</head>
-<body>
+ </head>
+ <body>
   <div class="container">
-    <div class="news-item" onclick="window.location.href='./data/news.md'">
-      <img src="https://i.ibb.co/Z8c6crL/pp.web" alt="news 1" height="400" width="600" />
-      <div class="source">
-        <img src="https://i.ibb.co/Z8c6crL/pp.web" alt="Tarz AI Logo" height="20" width="20" />
-        <span>TarnaWijaya WhatsApp</span>
-      </div>
-      <div class="title">Hati-hatilah dengan orang yang tidak dikenal</div>
-      <div class="actions">
-        <div class="likes" onclick="likePost(event, this)">
-          <i class="fas fa-thumbs-up"></i>
-          <span>0</span>
-        </div>
-      </div>
+   <div class="news-item" onclick="window.location.href='./data/news.md'">
+    <img alt="news 1" height="400" src="https://i.ibb.co.com/Z8c6crL/pp.web" width="600"/>
+    <div class="source">
+     <img alt="Tarz AI Logo" height="20" src="https://i.ibb.co.com/Z8c6crL/pp.web" width="20"/>
+     <span>
+      TarnaWijaya WhatsApp
+     </span>
     </div>
+    <div class="title">
+     Hati Hatilah dengan orang yang tidak dikenal
+    </div>
+    <div class="actions">
+     <div class="likes" onclick="likePost(this)">
+      <i class="fas fa-thumbs-up">
+      </i>
+      <span>
+       0
+      </span>
+     </div>
+    </div>
+   </div>
   </div>
   <div class="footer">
-    <i class="fas fa-home" onclick="window.location.href='#'"></i>
+   <i class="fas fa-home" onclick="window.location.href='#'">
+   </i>
   </div>
-</body>
+ </body>
 </html>
