@@ -66,6 +66,15 @@
         }
         .news-item .actions .likes {
             margin-right: 15px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        .news-item .actions .likes i {
+            margin-right: 5px;
+        }
+        .news-item .actions .likes span {
+            font-size: 14px;
         }
         .news-item .ad {
             color: #a1a1a1;
@@ -91,6 +100,21 @@
             color: #1e90ff;
         }
   </style>
+  <script>
+   function likePost(element) {
+            let likesCount = parseInt(element.querySelector('span').innerText);
+            likesCount++;
+            element.querySelector('span').innerText = likesCount;
+            localStorage.setItem('likes', likesCount);
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const likes = localStorage.getItem('likes');
+            if (likes) {
+                document.querySelector('.likes span').innerText = likes;
+            }
+        });
+  </script>
  </head>
  <body>
   <div class="container">
@@ -106,14 +130,12 @@
      10 Ide Passive Income di 2025 yang Bisa Bantu Kamu Tambah Penghasilan Tanpa Ribet
     </div>
     <div class="actions">
-     <div class="likes">
+     <div class="likes" onclick="likePost(this)">
       <i class="fas fa-thumbs-up">
       </i>
-      15
-     </div>
-     <div class="share">
-      <i class="fas fa-share">
-      </i>
+      <span>
+       15
+      </span>
      </div>
     </div>
    </div>
