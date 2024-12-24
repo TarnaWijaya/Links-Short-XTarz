@@ -7,3 +7,6 @@ Owner - Tarna Wijaya & alisa putri yanasari
 👋Halo Selamat datang diTarz AI kami disini hanya gabut saja saya juga butuh
 liburan jadi saya stop dulu up modulenya mungkin ada masalah sama modulenya
 langsung saja chat Dev Realnya atau Ownernya langsung
+
+Saya Selaku owner - Tarna Wijaya
+Saya ingin project ini ditunda untuk sementara waktu
