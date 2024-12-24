@@ -3,13 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Content Editable Example</title>
+    <title>Halaman Edit</title>
 </head>
 <body>
-    <div contenteditable="true">Teks 1</div>
-    <div contenteditable="true">Teks 2</div>
-    <div contenteditable="true">Teks 3</div>
-    <div contenteditable="true">Teks 4</div>
-    <div contenteditable="true">Teks 5</div>
+    <h2>Halaman yang Dapat Diedit</h2>
+    <div id="editableContent" contenteditable="true">
+        <p>Ini adalah konten yang dapat diedit oleh siapa saja. Perubahan akan disimpan secara lokal.</p>
+    </div>
+    <button onclick="saveContent()">Simpan Perubahan</button>
+
+    <script>
+        function saveContent() {
+            const content = document.getElementById("editableContent").innerHTML;
+            localStorage.setItem("savedContent", content);
+            alert("Perubahan telah disimpan secara lokal.");
+        }
+
+        window.onload = function() {
+            const savedContent = localStorage.getItem("savedContent");
+            if (savedContent) {
+                document.getElementById("editableContent").innerHTML = savedContent;
+            }
+        }
+    </script>
 </body>
 </html>
