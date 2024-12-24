@@ -3,28 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Halaman Edit</title>
+    <title>Halaman yang Dapat Diedit dengan Firebase</title>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js"></script>
 </head>
 <body>
-    <h2>Halaman yang Dapat Diedit</h2>
-    <div id="editableContent" contenteditable="true">
-        <p>Ini adalah konten yang dapat diedit oleh siapa saja. Perubahan akan disimpan secara lokal.</p>
+    <h2>Halaman yang Dapat Diedit oleh Banyak Orang</h2>
+    <div id="editableContent" contenteditable="true" style="border: 1px solid #ccc; padding: 10px; min-height: 150px;">
+        <p>Ini adalah konten yang dapat diedit oleh siapa saja. Perubahan akan disimpan dan dilihat oleh orang lain.</p>
     </div>
     <button onclick="saveContent()">Simpan Perubahan</button>
 
-    <script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+        import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCr_2ZTgYeBLuEqdqqO0L8mkgAqcyny92I",
+            authDomain: "links-short-xtarz.firebaseapp.com",
+            databaseURL: "https://links-short-xtarz-default-rtdb.firebaseio.com",
+            projectId: "links-short-xtarz",
+            storageBucket: "links-short-xtarz.firebasestorage.app",
+            messagingSenderId: "332229549607",
+            appId: "1:332229549607:web:91d29b3bfea9bcad477802",
+            measurementId: "G-WS5LHDWF3E"
+        };
+
+        // Inisialisasi Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Fungsi untuk menyimpan konten ke Firebase
         function saveContent() {
             const content = document.getElementById("editableContent").innerHTML;
-            localStorage.setItem("savedContent", content);
-            alert("Perubahan telah disimpan secara lokal.");
+            // Menyimpan konten ke Firebase Realtime Database
+            set(ref(db, 'content'), content)
+                .then(() => {
+                    alert("Perubahan telah disimpan.");
+                })
+                .catch((error) => {
+                    console.error("Error saving content:", error);
+                });
         }
 
-        window.onload = function() {
-            const savedContent = localStorage.getItem("savedContent");
-            if (savedContent) {
-                document.getElementById("editableContent").innerHTML = savedContent;
-            }
+        // Fungsi untuk memuat konten dari Firebase secara real-time
+        function loadContent() {
+            const contentRef = ref(db, 'content');
+            get(contentRef)
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        document.getElementById("editableContent").innerHTML = snapshot.val();
+                    } else {
+                        console.log("No data available");
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error getting content:", error);
+                });
         }
+
+        // Memuat konten saat halaman dimuat
+        window.onload = loadContent;
+
+        // Mendengarkan perubahan konten secara real-time
+        const contentRef = ref(db, 'content');
+        contentRef.on('value', (snapshot) => {
+            const content = snapshot.val();
+            if (content) {
+                document.getElementById("editableContent").innerHTML = content;
+            }
+        });
     </script>
 </body>
 </html>
